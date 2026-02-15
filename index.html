@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Creation Without Code - Workshop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      color: #000000;
+      line-height: 1.6;
+    }
+    .slide {
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      padding: 2rem 2.5rem;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      page-break-inside: avoid;
+    }
+    .slide-title {
+      font-size: 1.75rem;
+      color: #b71c1c;
+      border-bottom: 3px solid #b71c1c;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .slide-title i {
+      color: #b71c1c;
+    }
+    h1.main-title {
+      font-size: 2.25rem;
+      color: #b71c1c;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    h1.main-title .title-logo {
+      height: 56px;
+      width: auto;
+      max-width: 120px;
+      object-fit: contain;
+      vertical-align: middle;
+    }
+    .meta {
+      text-align: center;
+      color: #000000;
+      margin: 1rem 0;
+    }
+    .meta strong { color: #b71c1c; }
+    .meta span { display: block; margin: 0.25rem 0; }
+    .description {
+      background: #fafafa;
+      padding: 1rem 1.25rem;
+      border-left: 4px solid #b71c1c;
+      margin: 1rem 0;
+      color: #000000;
+    }
+    h2 {
+      color: #b71c1c;
+      font-size: 1.35rem;
+      margin: 1rem 0 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    h2 i { color: #b71c1c; }
+    p, li {
+      color: #000000;
+      margin-bottom: 0.5rem;
+    }
+    ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      color: #000000;
+    }
+    th {
+      background: #b71c1c;
+      color: #fff;
+      font-weight: 600;
+    }
+    tr:nth-child(even) { background: #f5f5f5; }
+    .flowchart {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+      padding: 1rem;
+    }
+    .flow-box {
+      padding: 0.75rem 1.25rem;
+      border: 2px solid #b71c1c;
+      background: #fff;
+      color: #000;
+      font-weight: 600;
+      min-width: 120px;
+      text-align: center;
+    }
+    .flow-arrow {
+      color: #b71c1c;
+      font-size: 1.25rem;
+    }
+    .flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.25rem 0;
+    }
+    .icon-list { list-style: none; margin-left: 0; }
+    .icon-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+    .icon-list i {
+      color: #b71c1c;
+      margin-top: 0.2rem;
+    }
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .topic-card {
+      border: 2px solid #b71c1c;
+      padding: 1rem;
+      text-align: center;
+      background: #fff;
+    }
+    .topic-card i {
+      font-size: 2rem;
+      color: #b71c1c;
+      margin-bottom: 0.5rem;
+    }
+    .topic-card strong { color: #000; }
+    .highlight { color: #b71c1c; font-weight: 600; }
+    .timeline-item {
+      border-left: 3px solid #b71c1c;
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
+    .timeline-item strong { color: #b71c1c; }
+    .flow-vertical {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin: 1.5rem 0;
+    }
+    .flow-vertical .flow-box { margin: 0.2rem 0; }
+    .flow-vertical .flow-arrow { transform: rotate(90deg); }
+    .flowchart-label { font-size: 0.75rem; color: #666; margin-top: 0.15rem; font-weight: normal; }
+    .flow-box .flowchart-label { display: block; }
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      justify-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .flow-start { border-radius: 50%; min-width: 90px; }
+    .flow-end { border-style: double; }
+    .org-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #b71c1c;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+      font-weight: 600;
+    }
+    .org-badge i { color: #fff; }
+    @media print {
+      .slide { box-shadow: none; border: 1px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide 1: Title -->
+  <section class="slide">
+    <h1 class="main-title">
+      <img src="https://www.cyberwolf.pro/assets/cyberwolf-logo-DbrojaJC.png" alt="AI Creation Without Code" class="title-logo">
+      AI CREATION WITHOUT CODE
+    </h1>
+    <div class="meta">
+      <span><strong>Coordinator:</strong> Tamilselvan S</span>
+      <span><strong>Date:</strong> 15/02/2026</span>
+      <span><strong>Time:</strong> 11:00 (2 Hours) — CLASS</span>
+    </div>
+    <div class="description">
+      Hands-on workshop on AI creation without code: practical tools, techniques, and ethical considerations.
+    </div>
+    <div class="topics-grid">
+      <div class="topic-card"><i class="fas fa-project-diagram"></i><br><strong>AI Working Flow</strong></div>
+      <div class="topic-card"><i class="fas fa-plug"></i><br><strong>API Integration</strong></div>
+      <div class="topic-card"><i class="fas fa-shield-alt"></i><br><strong>AI Security</strong></div>
+      <div class="topic-card"><i class="fas fa-drafting-compass"></i><br><strong>WF Builder</strong></div>
+    </div>
+  </section>
+
+  <!-- Slide: Without Code AI Builder — WF Builder -->
+  <section class="slide">
+    <h2 class="slide-title"><i class="fas fa-drafting-compass"></i> Without Code AI Builder — WF Builder</h2>
+    <div class="org-badge"><i class="fas fa-building"></i> Developed by Cyber Wolf Organizations</div>
+    <p>WF Builder is a <strong class="highlight">cross-platform workflow builder</strong> for creating AI modulations and automations without code. It runs on <strong>Windows</strong>, <strong>Linux</strong>, and <strong>Mac OS</strong>.</p>
+    <ul class="icon-list">
+      <li><i class="fas fa-desktop"></i> <strong>Flow building:</strong> Visual drag-and-drop flow design to create AI modulations and connect to any API.</li>
+      <li><i class="fas fa-plug"></i> <strong>Any API:</strong> Connect and integrate with any API; easy conversion of automation flows.</li>
+      <li><i class="fas fa-shield-alt"></i> <strong>Security-first:</strong> Built for security of websites, apps, and protection against all types of attacks.</li>
+      <li><i class="fas fa-layer-group"></i> <strong>Templates:</strong> Inbuilt templates included; more templates are regularly added.</li>
+      <li><i class="fas fa-robot"></i> <strong>Automation-based security:</strong> Focus on security and without-code, automation-based security implementations.</li>
+    </ul>
+    <h3 style="color:#b71c1c; margin-top:1rem;"><i class="fas fa-project-diagram"></i> WF Builder — Application Flow</h3>
+    <div class="flowchart">
+      <div class="flow-row">
+        <div class="flow-box flow-start">Start</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Choose Template / Blank</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Build Flow</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Connect API</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">AI Module</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box flow-end">Run / Deploy</div>
+      </div>
+    </div>
+    <h3 style="color:#b71c1c; margin-top:1.25rem;"><i class="fas fa-shield-alt"></i> WF Builder — Security & Automation Flow</h3>
+    <div class="flow-vertical">
+      <div class="flow-box">Trigger (Event / Schedule)</div>
+      <span class="flow-arrow">↓</span>
+      <div class="flow-box">Input (Website / App / API)</div>
+      <span class="flow-arrow">↓</span>
+      <div class="flow-box">Security Check & Validation</div>
+      <span class="flow-arrow">↓</span>
+      <div class="flow-box">AI Processing / Automation</div>
+      <span class="flow-arrow">↓</span>
+      <div class="flow-box">Attack Prevention & Response</div>
+      <span class="flow-arrow">↓</span>
+      <div class="flow-box">Output (Secure Result)</div>
+    </div>
+    <table>
+      <tr><th>Platform</th><th>Support</th></tr>
+      <tr><td>Windows</td><td>Full support — native application</td></tr>
+      <tr><td>Linux</td><td>Full support — native application</td></tr>
+      <tr><td>Mac OS</td><td>Full support — native application</td></tr>
+      <tr><th>Feature</th><th>Description</th></tr>
+      <tr><td>Flow building</td><td>Create AI modulations and automation flows visually</td></tr>
+      <tr><td>API connectivity</td><td>Connect to any API; convert and chain automations</td></tr>
+      <tr><td>Security</td><td>Website, apps, and all-type attack protection; automation-based security</td></tr>
+      <tr><td>Templates</td><td>Inbuilt templates; more templates added over time</td></tr>
+    </table>
+  </section>
+
+  <!-- Slide 2: What is AI -->
+  <section class="slide">
+    <h2 class="slide-title"><i class="fas fa-brain"></i> What is AI?</h2>
+    <p><strong class="highlight">Artificial Intelligence (AI)</strong> is the simulation of human intelligence by machines and computer systems. It enables systems to learn from data, recognize patterns, make decisions, and perform tasks that typically require human cognition.</p>
+    <ul class="icon-list">
+      <li><i class="fas fa-check-circle"></i> <strong>Learning:</strong> AI systems improve from experience and data.</li>
+      <li><i class="fas fa-check-circle"></i> <strong>Reasoning:</strong> Drawing conclusions and solving problems.</li>
+      <li><i class="fas fa-check-circle"></i> <strong>Perception:</strong> Understanding images, speech, and text.</li>
+      <li><i class="fas fa-check-circle"></i> <strong>Decision-making:</strong> Choosing actions to achieve goals.</li>
+    </ul>
+    <table>
+      <tr><th>Type</th><th>Description</th></tr>
+      <tr><td>Narrow AI</td><td>Designed for specific tasks (e.g., chatbots, image recognition).</td></tr>
+      <tr><td>General AI</td><td>Hypothetical AI with human-like intelligence across many domains.</td></tr>
+      <tr><td>Super AI</td><td>Theoretical AI that surpasses human capability.</td></tr>
+    </table>
+  </section>
+
+  <!-- Slide 3: AI History -->
+  <section class="slide">
+    <h2 class="slide-title"><i class="fas fa-history"></i> AI History</h2>
+    <p>Understanding the evolution of AI helps us appreciate today’s no-code tools and their foundations.</p>
+    <div class="timeline-item">
+      <strong>1950s — Birth of AI:</strong> Alan Turing proposed the “Turing Test”; the term “Artificial Intelligence” was coined at the Dartmouth Conference (1956).
+    </div>
+    <div class="timeline-item">
+      <strong>1960s–70s — Early programs:</strong> First AI programs for problem-solving, language translation, and game playing; funding and interest fluctuated (“AI winters”).
+    </div>
+    <div class="timeline-item">
+      <strong>1980s — Expert systems:</strong> Rule-based systems used in medicine and business; machine learning began to gain attention.
+    </div>
+    <div class="timeline-item">
+      <strong>1990s–2000s — Data and learning:</strong> Rise of the internet and big data; statistical learning and early neural networks.
+    </div>
+    <div class="timeline-item">
+      <strong>2010s — Deep learning boom:</strong> Deep neural networks achieved breakthroughs in vision, speech, and language (e.g., ImageNet, voice assistants).
+    </div>
+    <div class="timeline-item">
+      <strong>2020s — No-code AI & LLMs:</strong> ChatGPT, no-code platforms (e.g., Make, Zapier, Bubble), and accessible APIs made AI creation possible without coding.
+    </div>
+  </section>
+
+  <!-- Slide 4: Working of AI -->
+  <section class="slide">
+    <h2 class="slide-title"><i class="fas fa-cogs"></i> Working of AI</h2>
+    <p>AI systems typically follow a pipeline: <strong class="highlight">Data → Processing → Model → Output.</strong></p>
+    <ul class="icon-list">
+      <li><i class="fas fa-database"></i> <strong>Data:</strong> Raw inputs (text, images, numbers) are collected and stored.</li>
+      <li><i class="fas fa-filter"></i> <strong>Preprocessing:</strong> Data is cleaned, normalized, and prepared for the model.</li>
+      <li><i class="fas fa-brain"></i> <strong>Model:</strong> Algorithms (e.g., neural networks) learn patterns from data (training).</li>
+      <li><i class="fas fa-rocket"></i> <strong>Inference:</strong> The trained model takes new inputs and produces predictions or responses.</li>
+      <li><i class="fas fa-sync"></i> <strong>Feedback:</strong> Results can be used to improve the model (feedback loop).</li>
+    </ul>
+    <h3 style="color:#b71c1c; margin-top:1rem;"><i class="fas fa-project-diagram"></i> AI Working Flow (Flowchart)</h3>
+    <div class="flowchart">
+      <div class="flow-row">
+        <div class="flow-box">Input Data</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Preprocess</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">AI Model</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Output</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-box">User / Sensor</div>
+        <span class="flow-arrow">↓</span>
+        <div class="flow-box">Clean & Format</div>
+        <span class="flow-arrow">↓</span>
+        <div class="flow-box">Train / Infer</div>
+        <span class="flow-arrow">↓</span>
+        <div class="flow-box">Result / Action</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 5: AI Working Flow (Topic) -->
+  <section class="slide">
+    <h2 class="slide-title"><i class="fas fa-project-diagram"></i> Topic 1 — AI Working Flow</h2>
+    <p>In <strong class="highlight">no-code AI creation</strong>, you use visual workflows instead of writing code. The flow still follows: input → process → output. Tools like <strong>WF Builder</strong> support this with flow building and templates.</p>
+    <ul class="icon-list">
+      <li><i class="fas fa-mouse-pointer"></i> <strong>Triggers:</strong> Start a flow with events (e.g., form submit, schedule, webhook).</li>
+      <li><i class="fas fa-puzzle-piece"></i> <strong>Actions:</strong> Call AI services (e.g., OpenAI, sentiment analysis) via built-in blocks.</li>
+      <li><i class="fas fa-route"></i> <strong>Logic:</strong> Use conditions and branches to route data based on AI results.</li>
+      <li><i class="fas fa-paper-plane"></i> <strong>Output:</strong> Send results to email, databases, or other apps.</li>
+    </ul>
+    <h3 style="color:#b71c1c; margin-top:1rem;"><i class="fas fa-project-diagram"></i> No-Code Flow Building (e.g. WF Builder)</h3>
+    <div class="flowchart">
+      <div class="flow-row">
+        <div class="flow-box">Trigger</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Action 1</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Condition</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">AI / API</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Output</div>
+      </div>
+    </div>
+    <table>
+      <tr><th>Step</th><th>No-Code Equivalent</th></tr>
+      <tr><td>1. Input</td><td>Form, trigger, or connected app (e.g., Google Sheets, CRM).</td></tr>
+      <tr><td>2. Process</td><td>AI block (e.g., “Generate text”, “Classify”, “Extract”).</td></tr>
+      <tr><td>3. Output</td><td>Send to email, Slack, database, or another tool.</td></tr>
+    </table>
+  </section>
+
+  <!-- Slide 6: API Integration -->
+  <section class="slide">
+    <h2 class="slide-title"><i class="fas fa-plug"></i> Topic 2 — API Integration</h2>
+    <p>APIs (Application Programming Interfaces) let no-code platforms connect to AI services without writing code. You configure endpoints and keys; the platform handles the requests.</p>
+    <ul class="icon-list">
+      <li><i class="fas fa-key"></i> <strong>API Key:</strong> Secure token provided by the AI provider (e.g., OpenAI, Google AI).</li>
+      <li><i class="fas fa-link"></i> <strong>Endpoint:</strong> URL where the platform sends requests (e.g., chat completions, embeddings).</li>
+      <li><i class="fas fa-exchange-alt"></i> <strong>Request/Response:</strong> You map inputs (prompt, data) and use the returned output in your flow.</li>
+    </ul>
+    <table>
+      <tr><th>Provider</th><th>Common use in no-code</th></tr>
+      <tr><td>OpenAI (GPT)</td><td>Chatbots, text generation, summarization.</td></tr>
+      <tr><td>Google AI</td><td>Vision, translation, natural language.</td></tr>
+      <tr><td>Hugging Face</td><td>Models for sentiment, classification, custom ML.</td></tr>
+      <tr><td>Custom APIs</td><td>HTTP request blocks in Make, Zapier, n8n.</td></tr>
+    </table>
+    <h3 style="color:#b71c1c; margin-top:1rem;"><i class="fas fa-project-diagram"></i> API to Automation Flow</h3>
+    <div class="flowchart">
+      <div class="flow-row">
+        <div class="flow-box">External API</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">WF Builder / No-Code</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Parse & Map Data</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">AI / Logic</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Action / Output</div>
+      </div>
+    </div>
+    <p style="margin-top:1rem;"><strong class="highlight">Best practice:</strong> Store API keys in environment variables or secure fields; never expose them in front-end or public pages.</p>
+  </section>
+
+  <!-- Slide 7: AI Security -->
+  <section class="slide">
+    <h2 class="slide-title"><i class="fas fa-shield-alt"></i> Topic 3 — AI Security</h2>
+    <p>When creating AI solutions without code, security and ethics remain critical.</p>
+    <ul class="icon-list">
+      <li><i class="fas fa-lock"></i> <strong>Data privacy:</strong> Avoid sending sensitive personal data to third-party AI unless the provider guarantees compliance (e.g., GDPR, encryption).</li>
+      <li><i class="fas fa-user-shield"></i> <strong>Access control:</strong> Limit who can edit workflows and view AI outputs; use roles in your no-code platform.</li>
+      <li><i class="fas fa-exclamation-triangle"></i> <strong>Bias & fairness:</strong> AI can reflect biases in training data; review outputs for fairness and inclusivity.</li>
+      <li><i class="fas fa-balance-scale"></i> <strong>Transparency:</strong> Inform users when they interact with AI; document how decisions are made.</li>
+      <li><i class="fas fa-ban"></i> <strong>Misuse prevention:</strong> Use content filters and guidelines to reduce harmful or misleading use.</li>
+    </ul>
+    <h3 style="color:#b71c1c; margin-top:1rem;"><i class="fas fa-project-diagram"></i> Security & Attack Prevention Flow</h3>
+    <div class="flowchart">
+      <div class="flow-row">
+        <div class="flow-box">Request / Input</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Validate</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Detect Threat</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Block / Allow</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Log & Respond</div>
+      </div>
+    </div>
+    <div class="flow-vertical" style="margin-top:1rem;">
+      <div class="flow-box">Website / App / API</div>
+      <span class="flow-arrow">↓</span>
+      <div class="flow-box">Authentication & Access Control</div>
+      <span class="flow-arrow">↓</span>
+      <div class="flow-box">Encryption & Sanitization</div>
+      <span class="flow-arrow">↓</span>
+      <div class="flow-box">Automation-Based Security (WF Builder)</div>
+    </div>
+    <table>
+      <tr><th>Risk</th><th>Mitigation</th></tr>
+      <tr><td>Leaked API keys</td><td>Use env vars; rotate keys; restrict by IP if supported.</td></tr>
+      <tr><td>PII in prompts</td><td>Anonymize or avoid sending; use on-prem or compliant APIs.</td></tr>
+      <tr><td>Incorrect outputs</td><td>Human review for critical decisions; set confidence thresholds.</td></tr>
+    </table>
+  </section>
+
+  <!-- Slide 8: Summary -->
+  <section class="slide">
+    <h2 class="slide-title"><i class="fas fa-clipboard-list"></i> Summary</h2>
+    <p>This workshop covered <strong class="highlight">AI creation without code</strong>: what AI is, its history, how it works, and how no-code tools implement <strong>AI working flow</strong>, <strong>API integration</strong>, and <strong>AI security</strong>. We introduced <strong>WF Builder</strong> (Without Code AI Builder)—a Windows, Linux, and Mac OS application by <strong>Cyber Wolf Organizations</strong> for flow building, AI modulations, any API connectivity, and automation-based security for websites and apps. Use these concepts to build practical, secure, and ethical AI-powered automations.</p>
+    <div class="meta" style="margin-top:2rem;">
+      <span><strong>Coordinator:</strong> Tamilselvan S</span>
+      <span><strong>Date:</strong> 15/02/2026 | 11:00 (2 Hours) — CLASS</span>
+    </div>
+  </section>
+
+</body>
+</html>
